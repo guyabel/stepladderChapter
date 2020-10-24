@@ -1,6 +1,5 @@
 # stepladderChapter
 
-READ ME
 Scripts for data analysis in support of Ch. 7 of WMR: Migration as Stepladders of Opportunity
 This workflow uses three data sources to measure migrant stocks as analyzed through the lens of the Human Development Index.
 The following files can be found below. Some prep work was done in excel prior to importing into the R interface.
