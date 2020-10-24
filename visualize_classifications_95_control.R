@@ -1,4 +1,5 @@
-###CONTROL FOR YEAR
+##Visualizes To-Within_From as if HDI Classifications in 1995 were held constant.
+##Helps calculate HDI line in the current to_within_from charts in chapter.
 library(ggplot2)
 library(tidyr)
 library(dplyr)
@@ -7,33 +8,36 @@ library(data.table)
 library(gganimate)
 
 
-hdi_flows_all <- rbind(hdi_flows_1995, hdi_flows_2000_95, hdi_flows_2005_95, hdi_flows_2010_95,
-                       hdi_flows_2015_95, hdi_flows_2019_95)
-head(hdi_flows_all)
+hdi_stocks_all_1995 <- rbind(hdi_stocks_1995, hdi_stocks_2000_95, hdi_stocks_2005_95, hdi_stocks_2010_95,
+                       hdi_stocks_2015_95, hdi_stocks_2019_95)
 
-hdi_flow_toLow_95 <- hdi_flows_all %>% subset(Dest_HDI_1995 == "Low" & Orig_HDI_1995 != "Low")
-hdi_flow_toMed_95 <- hdi_flows_all %>% subset(Dest_HDI_1995 == "Medium" & Orig_HDI_1995 != "Medium")
-hdi_flow_toHigh_95 <- hdi_flows_all %>% subset(Dest_HDI_1995 == "High" & Orig_HDI_1995 != "High")
-hdi_flow_toVHigh_95 <- hdi_flows_all %>% subset(Dest_HDI_1995 == "Very High"& Orig_HDI_1995 != "Very High")
+##Subset by Directionality: "TO"
+hdi_stock_toLow_95 <- hdi_stocks_all_1995 %>% subset(Dest_HDI_1995 == "Low" & Orig_HDI_1995 != "Low")
+hdi_stock_toMed_95 <- hdi_stocks_all_1995 %>% subset(Dest_HDI_1995 == "Medium" & Orig_HDI_1995 != "Medium")
+hdi_stock_toHigh_95 <- hdi_stocks_all_1995 %>% subset(Dest_HDI_1995 == "High" & Orig_HDI_1995 != "High")
+hdi_stock_toVHigh_95 <- hdi_stocks_all_1995 %>% subset(Dest_HDI_1995 == "Very High"& Orig_HDI_1995 != "Very High")
 
-hdi_flow_withinLow_95 <- hdi_flows_all %>% subset(Dest_HDI_1995 == "Low" & Orig_HDI_1995 == "Low")
-hdi_flow_withinMed_95 <- hdi_flows_all %>% subset(Dest_HDI_1995 == "Medium" & Orig_HDI_1995 == "Medium")
-hdi_flow_withinHigh_95 <- hdi_flows_all %>% subset(Dest_HDI_1995 == "High" & Orig_HDI_1995 == "High")
-hdi_flow_withinVHigh_95 <- hdi_flows_all %>% subset(Dest_HDI_1995 == "Very High"& Orig_HDI_1995 == "Very High")
+##Subset by directionality: "Within"
+hdi_stock_withinLow_95 <- hdi_stocks_all_1995 %>% subset(Dest_HDI_1995 == "Low" & Orig_HDI_1995 == "Low")
+hdi_stock_withinMed_95 <- hdi_stocks_all_1995 %>% subset(Dest_HDI_1995 == "Medium" & Orig_HDI_1995 == "Medium")
+hdi_stock_withinHigh_95 <- hdi_stocks_all_1995 %>% subset(Dest_HDI_1995 == "High" & Orig_HDI_1995 == "High")
+hdi_stock_withinVHigh_95 <- hdi_stocks_all_1995 %>% subset(Dest_HDI_1995 == "Very High"& Orig_HDI_1995 == "Very High")
 
-hdi_flow_fromLow_95 <- hdi_flows_all %>% subset(Dest_HDI_1995 != "Low" & Orig_HDI_1995 == "Low")
-hdi_flow_fromMed_95 <- hdi_flows_all %>% subset(Dest_HDI_1995 != "Medium" & Orig_HDI_1995 == "Medium")
-hdi_flow_fromHigh_95 <- hdi_flows_all %>% subset(Dest_HDI_1995 != "High" & Orig_HDI_1995 == "High")
-hdi_flow_fromVHigh_95 <- hdi_flows_all %>% subset(Dest_HDI_1995 != "Very High"& Orig_HDI_1995 == "Very High")
+##Subset by directionality: "From"
+hdi_stock_fromLow_95 <- hdi_stocks_all_1995 %>% subset(Dest_HDI_1995 != "Low" & Orig_HDI_1995 == "Low")
+hdi_stock_fromMed_95 <- hdi_stocks_all_1995 %>% subset(Dest_HDI_1995 != "Medium" & Orig_HDI_1995 == "Medium")
+hdi_stock_fromHigh_95 <- hdi_stocks_all_1995 %>% subset(Dest_HDI_1995 != "High" & Orig_HDI_1995 == "High")
+hdi_stock_fromVHigh_95 <- hdi_stocks_all_1995 %>% subset(Dest_HDI_1995 != "Very High"& Orig_HDI_1995 == "Very High")
 
+#Practice "From" Figure. NOTE: Change label for each separate HDI classification
 plot_area_from <- function(data){
   data %>%
     group_by(Year, Dest_HDI_1995) %>%
-    summarise_at(vars(flow), list(emigrants=sum), na.rm = TRUE) %>%
+    summarise_at(vars(stock), list(emigrants=sum), na.rm = TRUE) %>%
     ggplot(aes(x = Year, y=emigrants, fill = Dest_HDI_1995)) +
     geom_area() +
     #(limits = c(0, 3500000), breaks = seq(0,3500000, 1000000), labels = c("0", "1", "2", "3")) +
-    #scale_fill_manual(name="HDI Classification", values = rev(colors2), na.value = "#a1dab4") +
+    #scale_fill_manual(name="HDI Classification", values = rev(cols), na.value = "#a1dab4") +
     labs(title="Average migrant stock among countries by HDI classification over time", y="Average migrant stock\n(in millions)")+
     theme(axis.text = element_text(face="bold", size=14), 
           panel.background = element_blank(),
@@ -44,17 +48,17 @@ plot_area_from <- function(data){
           axis.title.x = element_text(face='bold',size=14, margin = margin(t = 20, r = 0, b = 0, l = 0)),
           axis.title.y = element_text(face='bold',size=14, margin=margin(0,20,0,0)))
 }
-plot_area_from(hdi_flow_fromLow_95)
-plot_area_from(hdi_flow_fromMed_95)
-plot_area_from(hdi_flow_fromHigh_95)
-plot_area_from(hdi_flow_fromVHigh_95)
+plot_area_from(hdi_stock_fromLow_95)
+plot_area_from(hdi_stock_fromMed_95)
+plot_area_from(hdi_stock_fromHigh_95)
+plot_area_from(hdi_stock_fromVHigh_95)
 
-
+#To-Within-From Figure. NOTE: Change label for each separate HDI classification
 plot_all <- function(dataTO, dataWITHIN, dataFROM, max_mig, seq_mig) {
   #to
   to_plot <- dataTO %>%
     group_by(Year, Orig_HDI_1995) %>%
-    summarise_at(vars(flow), list(immigrants=sum), na.rm = TRUE) %>%
+    summarise_at(vars(stock), list(immigrants=sum), na.rm = TRUE) %>%
     ggplot(aes(x = Year, y=immigrants, fill = Orig_HDI_1995)) +
     geom_area() +
     scale_y_continuous(limits = c(0, max_mig), breaks = seq(0, max_mig, seq_mig), labels = c("0", "50", "100", "150")) +
@@ -73,13 +77,13 @@ plot_all <- function(dataTO, dataWITHIN, dataFROM, max_mig, seq_mig) {
   
   to_table <- dataTO %>%
     group_by(Year, Orig_HDI_1995) %>%
-    summarise_at(vars(flow), list(emigrants=sum), na.rm = TRUE) %>%
+    summarise_at(vars(stock), list(emigrants=sum), na.rm = TRUE) %>%
     spread(Year, emigrants)
   
   #within
   within_plot <- dataWITHIN %>%
     group_by(Year, Orig_HDI_1995) %>%
-    summarise_at(vars(flow), list(emigrants=sum), na.rm = TRUE) %>%
+    summarise_at(vars(stock), list(emigrants=sum), na.rm = TRUE) %>%
     ggplot(aes(x = Year, y=emigrants, fill = Orig_HDI_1995)) +
     geom_area() +
     scale_y_continuous(limits = c(0, max_mig), breaks = seq(0, max_mig, seq_mig)) +
@@ -98,13 +102,13 @@ plot_all <- function(dataTO, dataWITHIN, dataFROM, max_mig, seq_mig) {
   
   within_table <- dataWITHIN %>%
     group_by(Year, Orig_HDI_1995) %>%
-    summarise_at(vars(flow), list(emigrants=sum), na.rm = TRUE) %>%
+    summarise_at(vars(stock), list(emigrants=sum), na.rm = TRUE) %>%
     spread(Year, emigrants)
   
   #from
   from_plot <- dataFROM %>%
     group_by(Year, Dest_HDI_1995) %>%
-    summarise_at(vars(flow), list(emigrants=sum), na.rm = TRUE) %>%
+    summarise_at(vars(stock), list(emigrants=sum), na.rm = TRUE) %>%
     ggplot(aes(x = Year, y=emigrants, fill = Dest_HDI_1995)) +
     geom_area() +
     scale_y_continuous(limits = c(0, max_mig), breaks = seq(0, max_mig, seq_mig)) +
@@ -123,13 +127,14 @@ plot_all <- function(dataTO, dataWITHIN, dataFROM, max_mig, seq_mig) {
   
   from_table <- dataFROM %>%
     group_by(Year, Dest_HDI_1995) %>%
-    summarise_at(vars(flow), list(emigrants=sum), na.rm = TRUE) %>%
+    summarise_at(vars(stock), list(emigrants=sum), na.rm = TRUE) %>%
     spread(Year, emigrants)
   #wrap
   figure <- ggpubr::ggarrange(to_plot, within_plot, from_plot,
-                              labels = c("To low HDI Countries (1995)", "Within low HDI Countries (1995)", "From low HDI Countries (1995)"),
+                              labels = c("To low HDI Countries (1995)", "Within low HDI Countries (1995)", "From low HDI Countries (1995)"), #CHANGE LABEL HERE
                               ncol = 3, nrow = 1, align = "hv")
   
+  #OPTION TO PRINT OUT TABLE#
   
   #write.csv(to_table, "to_table_low_1995.csv")
   #write.csv(within_table, "within_table_low_1995.csv")
@@ -141,7 +146,7 @@ plot_all <- function(dataTO, dataWITHIN, dataFROM, max_mig, seq_mig) {
 }
 
 
-plot_all(hdi_flow_toLow_95, hdi_flow_withinLow_95, hdi_flow_fromLow_95, 150000000, 50000000)
-plot_all(hdi_flow_toMed_95, hdi_flow_withinMed_95, hdi_flow_fromMed_95, 150000000, 50000000)
-plot_all(hdi_flow_toHigh_95,hdi_flow_withinHigh_95, hdi_flow_fromHigh_95, 150000000, 50000000)
-plot_all(hdi_flow_toVHigh_95, hdi_flow_withinVHigh_95, hdi_flow_fromVHigh_95, 150000000, 50000000)
+plot_all(hdi_stock_toLow_95, hdi_stock_withinLow_95, hdi_stock_fromLow_95, 150000000, 50000000)
+plot_all(hdi_stock_toMed_95, hdi_stock_withinMed_95, hdi_stock_fromMed_95, 150000000, 50000000)
+plot_all(hdi_stock_toHigh_95,hdi_stock_withinHigh_95, hdi_stock_fromHigh_95, 150000000, 50000000)
+plot_all(hdi_stock_toVHigh_95, hdi_stock_withinVHigh_95, hdi_stock_fromVHigh_95, 150000000, 50000000)

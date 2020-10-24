@@ -1,3 +1,4 @@
+##Provides basic script, imports colors and practice doc. ##Note: NOTHING HERE IS CURRENTLY IN THE CHAPTER
 library(ggplot2)
 library(tidyr)
 library(dplyr)
@@ -5,20 +6,20 @@ library(ggpubr)
 library(data.table)
 library(gganimate)
 
-names(hdi_flows_1990)
+###SCRATCH FILE###
 
-
+#set colors
 cols <- c("Very High" = "#253494", "High" = "#2c7fb8", "Medium" = "#41b6c4", "Low" = "#a1dab4")
-# re-order by variable Win
-# the variables are re-orderd in the order of the win
+colors2 <- c("#253494", "#2c7fb8")
 
+#Plots emigration from origin by HDI classification
 plot_orig <- function(data){
   data %>%
   group_by(Orig_HDI) %>%
-  summarise(sum = sum(flow, na.rm = TRUE)) %>%
+  summarise(sum = sum(stock, na.rm = TRUE)) %>%
   ggplot(aes(x = reorder(Orig_HDI, sum), y=sum, fill=Orig_HDI)) +
   geom_bar(stat='identity', position = 'dodge') +
-  scale_fill_manual(name="HDI Classification", values = rev(colors4)) +
+  scale_fill_manual(name="HDI Classification", values = rev(cols)) +
   labs(title="Average migrant stock among countries by HDI classification over time", y="Average migrant stock\n(in millions)")+
   theme(axis.text = element_text(face="bold", size=14), 
         panel.background = element_blank(),
@@ -30,17 +31,18 @@ plot_orig <- function(data){
         axis.title.y = element_text(face='bold',size=14, margin=margin(0,20,0,0)))  
 }
 
-plot_orig(hdi_flows_1995)
-plot_orig(hdi_flows_2000)
-plot_orig(hdi_flows_2005)
-plot_orig(hdi_flows_2010)
-plot_orig(hdi_flows_2015)
-plot_orig(hdi_flows_2019)
+plot_orig(hdi_stocks_1995)
+plot_orig(hdi_stocks_2000)
+plot_orig(hdi_stocks_2005)
+plot_orig(hdi_stocks_2010)
+plot_orig(hdi_stocks_2015)
+plot_orig(hdi_stocks_2019)
 
+#plots immigration to destination by HDI classification
 plot_dest <- function(data){
   data %>%
     group_by(Dest_HDI) %>%
-    summarise(sum = sum(flow, na.rm = TRUE)) %>%
+    summarise(sum = sum(stock, na.rm = TRUE)) %>%
     ggplot(aes(x = Dest_HDI, y=sum, fill=Dest_HDI)) +
     geom_bar(stat='identity', position = 'dodge') +
     #(limits = c(0, 3500000), breaks = seq(0,3500000, 1000000), labels = c("0", "1", "2", "3")) +
@@ -55,19 +57,19 @@ plot_dest <- function(data){
           axis.title.x = element_text(face='bold',size=14, margin = margin(t = 20, r = 0, b = 0, l = 0)),
           axis.title.y = element_text(face='bold',size=14, margin=margin(0,20,0,0)))  
 }
-plot_dest(hdi_flows_1995)
-plot_dest(hdi_flows_2000)
-plot_dest(hdi_flows_2005)
-plot_dest(hdi_flows_2010)
-plot_dest(hdi_flows_2015)
-plot_dest(hdi_flows_2019)
+plot_dest(hdi_stocks_1995)
+plot_dest(hdi_stocks_2000)
+plot_dest(hdi_stocks_2005)
+plot_dest(hdi_stocks_2010)
+plot_dest(hdi_stocks_2015)
+plot_dest(hdi_stocks_2019)
 
-
+#Plots immigration and emigration on one diverging plot.
 plot_diverge <- function(data){
   data %>%
     gather(key="emm_imm", value = "migrants_total", c(9,11),na.rm=TRUE)%>%
     group_by(emm_imm, migrants_total) %>%
-    summarise(sum = sum(flow, na.rm = TRUE)) %>%
+    summarise(sum = sum(stock, na.rm = TRUE)) %>%
     mutate(total = ifelse(emm_imm == "Dest_HDI",
                           sum, -1*sum), migrants_total = factor(migrants_total, levels= c('Low','Medium', 'High',"Very High")))%>%
     ggplot(aes(x = migrants_total, y=total, fill=emm_imm)) +
@@ -85,35 +87,22 @@ plot_diverge <- function(data){
           axis.title.x = element_text(face='bold',size=14, margin = margin(t = 20, r = 0, b = 0, l = 0)),
           axis.title.y = element_text(face='bold',size=14, margin=margin(0,20,0,0)))+
     coord_flip() 
-    #transition_states(Year, wrap = FALSE) +
-    #shadow_mark() +
-    #enter_grow() +
-    #enter_fade()
 }
-hdi_sums <- hdi_flows_all %>%
- gather(key="emm_imm", value = "migrants_total", c(7:8),na.rm=TRUE)%>%
-  group_by(emm_imm, migrants_total, Year) %>%
-  summarise(sum = sum(flow, na.rm = TRUE)) %>%
-  mutate(total = ifelse(emm_imm == "Dest_HDI",
-                        sum, -1*sum))
-hdi_sums %>%
-  group_by(Year) %>%
-  sum(hdi_sums$sum)
-
- #levels = c("Very High", "High", "Medium", "Low")
-plot_diverge(hdi_flows_1995)
-plot_diverge(hdi_flows_2000)
-plot_diverge(hdi_flows_2005)
-plot_diverge(hdi_flows_2010)
-plot_diverge(hdi_flows_2015)
-plot_diverge(hdi_flows_2019)
 
 
+plot_diverge(hdi_stocks_1995_short)
+plot_diverge(hdi_stocks_2000)
+plot_diverge(hdi_stocks_2005)
+plot_diverge(hdi_stocks_2010)
+plot_diverge(hdi_stocks_2015)
+plot_diverge(hdi_stocks_2019)
+
+#Animated diverging bar plot
 plot_diverge_animated <- function(data){
   data %>%
     gather(key="emm_imm", value = "migrants_total", c(7:8),na.rm=TRUE)%>%
     group_by(emm_imm, migrants_total, Year) %>%
-    summarise(sum = sum(flow, na.rm = TRUE)) %>%
+    summarise(sum = sum(stock, na.rm = TRUE)) %>%
     mutate(total = ifelse(emm_imm == "Dest_HDI",
                           sum, -1*sum), migrants_total = factor(migrants_total, levels= c('Low','Medium', 'High',"Very High")))%>%
     ggplot(aes(x = migrants_total, y=total, fill=emm_imm)) +
@@ -137,44 +126,39 @@ plot_diverge_animated <- function(data){
     #enter_grow() +
     #enter_fade()
 }
+animation <- plot_diverge_animated(hdi_stocks_all)
+anim_save("hdi_diverge_13082020.gif", animation = last_animation()) ###Set date of animation
+
+##TO-WITHIN-FROM CHARTS
+
+##Subset by Directionality: "TO"
+hdi_stock_toLow <- hdi_stocks_all %>% subset(Dest_HDI == "Low" & Orig_HDI != "Low")
+hdi_stock_toMed <- hdi_stocks_all %>% subset(Dest_HDI == "Medium" & Orig_HDI != "Medium")
+hdi_stock_toHigh <- hdi_stocks_all %>% subset(Dest_HDI == "High" & Orig_HDI != "High")
+hdi_stock_toVHigh <- hdi_stocks_all %>% subset(Dest_HDI == "Very High"& Orig_HDI != "Very High")
+
+##Subset by directionality: "Within"
+hdi_stock_withinLow <- hdi_stocks_all %>% subset(Dest_HDI == "Low" & Orig_HDI == "Low")
+hdi_stock_withinMed <- hdi_stocks_all %>% subset(Dest_HDI == "Medium" & Orig_HDI == "Medium")
+hdi_stock_withinHigh <- hdi_stocks_all %>% subset(Dest_HDI == "High" & Orig_HDI == "High")
+hdi_stock_withinVHigh <- hdi_stocks_all %>% subset(Dest_HDI == "Very High"& Orig_HDI == "Very High")
+
+##Subset by directionality: "From"
+hdi_stock_fromLow <- hdi_stocks_all %>% subset(Dest_HDI != "Low" & Orig_HDI == "Low")
+hdi_stock_fromMed <- hdi_stocks_all %>% subset(Dest_HDI != "Medium" & Orig_HDI == "Medium")
+hdi_stock_fromHigh <- hdi_stocks_all %>% subset(Dest_HDI != "High" & Orig_HDI == "High")
+hdi_stock_fromVHigh <- hdi_stocks_all %>% subset(Dest_HDI != "Very High"& Orig_HDI == "Very High")
 
 
-animation <- plot_diverge_animated(hdi_flows_all)
-anim_save("hdi_diverge_13082020.gif", animation = last_animation())
-hdi_flows_1995$Year <- 1995
-hdi_flows_2000$Year <- 2000
-hdi_flows_2005$Year <- 2005
-hdi_flows_2010$Year <- 2010
-hdi_flows_2015$Year <- 2015
-hdi_flows_2019$Year <- 2019
-
-hdi_flows_all <- rbind(hdi_flows_1995, hdi_flows_2000, hdi_flows_2005, hdi_flows_2010,
-                       hdi_flows_2015, hdi_flows_2019)
-head(hdi_flows_all)
-
-hdi_flow_toLow <- hdi_flows_all %>% subset(Dest_HDI == "Low" & Orig_HDI != "Low")
-hdi_flow_toMed <- hdi_flows_all %>% subset(Dest_HDI == "Medium" & Orig_HDI != "Medium")
-hdi_flow_toHigh <- hdi_flows_all %>% subset(Dest_HDI == "High" & Orig_HDI != "High")
-hdi_flow_toVHigh <- hdi_flows_all %>% subset(Dest_HDI == "Very High"& Orig_HDI != "Very High")
-
-hdi_flow_withinLow <- hdi_flows_all %>% subset(Dest_HDI == "Low" & Orig_HDI == "Low")
-hdi_flow_withinMed <- hdi_flows_all %>% subset(Dest_HDI == "Medium" & Orig_HDI == "Medium")
-hdi_flow_withinHigh <- hdi_flows_all %>% subset(Dest_HDI == "High" & Orig_HDI == "High")
-hdi_flow_withinVHigh <- hdi_flows_all %>% subset(Dest_HDI == "Very High"& Orig_HDI == "Very High")
-
-hdi_flow_fromLow <- hdi_flows_all %>% subset(Dest_HDI != "Low" & Orig_HDI == "Low")
-hdi_flow_fromMed <- hdi_flows_all %>% subset(Dest_HDI != "Medium" & Orig_HDI == "Medium")
-hdi_flow_fromHigh <- hdi_flows_all %>% subset(Dest_HDI != "High" & Orig_HDI == "High")
-hdi_flow_fromVHigh <- hdi_flows_all %>% subset(Dest_HDI != "Very High"& Orig_HDI == "Very High")
-
+#PRACTICE "FROM" CHART
 plot_area_from <- function(data){
   data %>%
     group_by(Year, Dest_HDI) %>%
-    summarise_at(vars(flow), list(emigrants=sum), na.rm = TRUE) %>%
+    summarise_at(vars(stock), list(emigrants=sum), na.rm = TRUE) %>%
     ggplot(aes(x = Year, y=emigrants, fill = Dest_HDI)) +
     geom_area() +
     #(limits = c(0, 3500000), breaks = seq(0,3500000, 1000000), labels = c("0", "1", "2", "3")) +
-    scale_fill_manual(name="HDI Classification", values = rev(colors4), na.value = "#a1dab4") +
+    scale_fill_manual(name="HDI Classification", values = rev(cols), na.value = "#a1dab4") +
     labs(title="Average migrant stock among countries by HDI classification over time", y="Average migrant stock\n(in millions)")+
     theme(axis.text = element_text(face="bold", size=14), 
           panel.background = element_blank(),
@@ -185,17 +169,17 @@ plot_area_from <- function(data){
           axis.title.x = element_text(face='bold',size=14, margin = margin(t = 20, r = 0, b = 0, l = 0)),
           axis.title.y = element_text(face='bold',size=14, margin=margin(0,20,0,0)))
 }
-plot_area_from(hdi_flow_fromLow)
-plot_area_from(hdi_flow_fromMed)
-plot_area_from(hdi_flow_fromHigh)
-plot_area_from(hdi_flow_fromVHigh)
+plot_area_from(hdi_stock_fromLow)
+plot_area_from(hdi_stock_fromMed)
+plot_area_from(hdi_stock_fromHigh)
+plot_area_from(hdi_stock_fromVHigh)
 
-
+#Practice All Chart. NOTE: Change label for each separate HDI classification
 plot_all <- function(dataTO, dataWITHIN, dataFROM, max_mig, seq_mig) {
   #to
   to_plot <- dataTO %>%
     group_by(Year, Orig_HDI) %>%
-    summarise_at(vars(flow), list(emigrants=sum), na.rm = TRUE) %>%
+    summarise_at(vars(stock), list(emigrants=sum), na.rm = TRUE) %>%
     ggplot(aes(x = Year, y=emigrants, fill = Orig_HDI)) +
     geom_area() +
     scale_y_continuous(limits = c(0, max_mig), breaks = seq(0, max_mig, seq_mig), labels = c("0", "50", "100", "150")) +
@@ -214,13 +198,13 @@ plot_all <- function(dataTO, dataWITHIN, dataFROM, max_mig, seq_mig) {
   
   to_table <- dataTO %>%
     group_by(Year, Orig_HDI) %>%
-    summarise_at(vars(flow), list(emigrants=sum), na.rm = TRUE) %>%
+    summarise_at(vars(stock), list(emigrants=sum), na.rm = TRUE) %>%
     spread(Year, emigrants)
     
   #within
   within_plot <- dataWITHIN %>%
     group_by(Year, Orig_HDI) %>%
-    summarise_at(vars(flow), list(emigrants=sum), na.rm = TRUE) %>%
+    summarise_at(vars(stock), list(emigrants=sum), na.rm = TRUE) %>%
     ggplot(aes(x = Year, y=emigrants, fill = Orig_HDI)) +
     geom_area() +
     scale_y_continuous(limits = c(0, max_mig), breaks = seq(0, max_mig, seq_mig)) +
@@ -239,13 +223,13 @@ plot_all <- function(dataTO, dataWITHIN, dataFROM, max_mig, seq_mig) {
   
   within_table <- dataWITHIN %>%
     group_by(Year, Orig_HDI) %>%
-    summarise_at(vars(flow), list(emigrants=sum), na.rm = TRUE) %>%
+    summarise_at(vars(stock), list(emigrants=sum), na.rm = TRUE) %>%
     spread(Year, emigrants)
   
   #from
   from_plot <- dataFROM %>%
     group_by(Year, Dest_HDI) %>%
-    summarise_at(vars(flow), list(emigrants=sum), na.rm = TRUE) %>%
+    summarise_at(vars(stock), list(emigrants=sum), na.rm = TRUE) %>%
     ggplot(aes(x = Year, y=emigrants, fill = Dest_HDI)) +
     geom_area() +
     scale_y_continuous(limits = c(0, max_mig), breaks = seq(0, max_mig, seq_mig)) +
@@ -264,12 +248,12 @@ plot_all <- function(dataTO, dataWITHIN, dataFROM, max_mig, seq_mig) {
   
   from_table <- dataFROM %>%
     group_by(Year, Dest_HDI) %>%
-    summarise_at(vars(flow), list(emigrants=sum), na.rm = TRUE) %>%
+    summarise_at(vars(stock), list(emigrants=sum), na.rm = TRUE) %>%
     spread(Year, emigrants)
   
   #wrap
   figure <- ggpubr::ggarrange(to_plot, within_plot, from_plot,
-                      labels = c("To low HDI Countries", "Within low HDI Countries", "From low HDI Countries"),
+                      labels = c("To low HDI Countries", "Within low HDI Countries", "From low HDI Countries"), #THESE MUST BE CHANGED BY CLASSIFICATION
                       ncol = 3, nrow = 1, align = "hv")
   
   write.csv(to_table, "to_table_vhigh.csv")
@@ -281,7 +265,7 @@ plot_all <- function(dataTO, dataWITHIN, dataFROM, max_mig, seq_mig) {
   figure
 }
 
-plot_all(hdi_flow_toLow, hdi_flow_withinLow, hdi_flow_fromLow, 150000000, 50000000)
-plot_all(hdi_flow_toMed, hdi_flow_withinMed, hdi_flow_fromMed, 150000000, 50000000)
-plot_all(hdi_flow_toHigh,hdi_flow_withinHigh, hdi_flow_fromHigh, 150000000, 50000000)
-plot_all(hdi_flow_toVHigh, hdi_flow_withinVHigh, hdi_flow_fromVHigh, 150000000, 50000000)
+plot_all(hdi_stock_toLow, hdi_stock_withinLow, hdi_stock_fromLow, 150000000, 50000000)
+plot_all(hdi_stock_toMed, hdi_stock_withinMed, hdi_stock_fromMed, 150000000, 50000000)
+plot_all(hdi_stock_toHigh,hdi_stock_withinHigh, hdi_stock_fromHigh, 150000000, 50000000)
+plot_all(hdi_stock_toVHigh, hdi_stock_withinVHigh, hdi_stock_fromVHigh, 150000000, 50000000)

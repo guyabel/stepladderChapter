@@ -1,0 +1,233 @@
+Country,sum_migrants,Population,pct_of_pop,Region
+Afghanistan,53958,18111000,0.002979294,Asia
+Albania,62720,3113000,0.020147767,Europe
+Algeria,41822,28758000,0.001454274,Africa
+American Samoa,22272,53000,0.420226415,Oceania
+Andorra,39688,64000,0.620125,Europe
+Angola,28959,13945000,0.002076658,Africa
+Anguilla,1480,10000,0.148,Latin America and the Caribbean
+Antigua and Barbuda,10413,69000,0.150913043,Latin America and the Caribbean
+Argentina,1311857,34828000,0.037666734,Latin America and the Caribbean
+Armenia,394621,3217000,0.122667392,Asia
+Aruba,13867,80000,0.1733375,Latin America and the Caribbean
+Australia,3914739,17993000,0.217570111,Oceania
+Austria,739323,7990000,0.092531039,Europe
+Azerbaijan,50076,7775000,0.006440643,Asia
+Bahamas,29115,280000,0.103982143,Latin America and the Caribbean
+Bahrain,196639,564000,0.348650709,Asia
+Bangladesh,800479,115170000,0.006950412,Asia
+Barbados,11092,266000,0.041699248,Latin America and the Caribbean
+Belarus,1154256,10078000,0.114532248,Europe
+Belgium,1213037,10186000,0.119088651,Europe
+Belize,23499,207000,0.113521739,Latin America and the Caribbean
+Benin,64491,5906000,0.010919573,Africa
+Bermuda,15797,63000,0.250746032,Northern America
+Bhutan,25828,535000,0.048276636,Asia
+Bolivia (Plurinational State of),80839,7622000,0.010606009,Latin America and the Caribbean
+"Bonaire, Sint Eustatius and Saba",26430,15000,1.762,Latin America and the Caribbean
+Bosnia and Herzegovina,60423,3829000,0.01578036,Europe
+Botswana,33957,1469000,0.023115725,Africa
+Brazil,670543,162020000,0.004138643,Latin America and the Caribbean
+British Virgin Islands,4080,19000,0.214736842,Latin America and the Caribbean
+Brunei Darussalam,83870,297000,0.282390572,Asia
+Bulgaria,27876,8379000,0.003326889,Europe
+Burkina Faso,129445,10090000,0.012829039,Africa
+Burundi,214117,5987000,0.035763655,Africa
+Cabo Verde,6014,386000,0.015580311,Africa
+Cambodia,86427,10656000,0.008110642,Asia
+Cameroon,10986,13600000,0.000807794,Africa
+Canada,4588027,29164000,0.157318166,Northern America
+Cayman Islands,12360,32000,0.38625,Latin America and the Caribbean
+Central African Republic,62741,3223000,0.019466646,Africa
+Chad,67798,7010000,0.009671612,Africa
+Channel Islands,59282,143000,0.414559441,Europe
+Chile,128205,14381000,0.008914888,Latin America and the Caribbean
+China,331592,1262277000,0.000262694,Asia
+"China, Hong Kong SAR",2094104,6084000,0.344198554,Asia
+"China, Macao SAR",209943,386000,0.543893782,Asia
+Colombia,67653,36421000,0.001857527,Latin America and the Caribbean
+Comoros,786,475000,0.001654737,Africa
+Congo,162594,2708000,0.060042097,Africa
+Cook Islands,2531,19000,0.133210526,Oceania
+Costa Rica,198087,3546000,0.055862098,Latin America and the Caribbean
+Côte d'Ivoire,864647,14200000,0.060890634,Africa
+Croatia,45346,4617000,0.009821529,Europe
+Cuba,21258,10888000,0.001952425,Latin America and the Caribbean
+Curaçao,0,144000,0,Latin America and the Caribbean
+Cyprus,54277,855000,0.063481871,Asia
+Czechia,164195,10358000,0.015851998,Europe
+Democratic Republic of the Congo,1302212,41576000,0.031321243,Africa
+Denmark,233018,5233000,0.044528569,Europe
+Djibouti,236,630000,0.000374603,Africa
+Dominica,1910,71000,0.026901408,Latin America and the Caribbean
+Dominican Republic,292926,7819000,0.037463358,Latin America and the Caribbean
+Ecuador,95767,11455000,0.008360279,Latin America and the Caribbean
+Egypt,92687,62334000,0.001486941,Africa
+El Salvador,38761,5629000,0.006885948,Latin America and the Caribbean
+Equatorial Guinea,2813,497000,0.00565996,Africa
+Eritrea,7134,2204000,0.003236842,Africa
+Estonia,310761,1433000,0.216860433,Europe
+Eswatini,27862,927000,0.030056095,Africa
+Ethiopia,35314,57048000,0.000619023,Africa
+Falkland Islands (Malvinas),796,2000,0.398,Latin America and the Caribbean
+Faroe Islands,2707,46000,0.058847826,Europe
+Fiji,9491,775000,0.012246452,Oceania
+Finland,93791,5119000,0.018322133,Europe
+France,5763668,57802000,0.099713989,Europe
+French Guiana,41745,137000,0.304708029,Latin America and the Caribbean
+French Polynesia,22458,218000,0.103018349,Oceania
+Gabon,113355,1085000,0.104474654,Africa
+Gambia,136995,1129000,0.121341895,Africa
+Georgia,138913,4976000,0.0279166,Asia
+Germany,6699810,81139000,0.082572006,Europe
+Ghana,165458,17014000,0.009724815,Africa
+Gibraltar,7115,29000,0.245344828,Europe
+Greece,764633,10746000,0.071155127,Europe
+Greenland,6761,56000,0.120732143,Northern America
+Grenada,2490,100000,0.0249,Latin America and the Caribbean
+Guadeloupe,55859,437000,0.127823799,Latin America and the Caribbean
+Guam,60548,146000,0.414712329,Oceania
+Guatemala,155499,10408000,0.014940334,Latin America and the Caribbean
+Guinea,311858,7270000,0.042896561,Africa
+Guinea-Bissau,24010,1089000,0.02204775,Africa
+Guyana,2639,761000,0.003467806,Latin America and the Caribbean
+Haiti,12975,7745000,0.001675274,Latin America and the Caribbean
+Holy See,0,1000,0,Europe
+Honduras,148786,5709000,0.026061657,Latin America and the Caribbean
+Hungary,287149,10349000,0.027746546,Europe
+Iceland,12254,268000,0.045723881,Europe
+India,6883806,963923000,0.007141448,Asia
+Indonesia,247592,196934000,0.001257233,Asia
+Iran (Islamic Republic of),2876711,61443000,0.046819182,Asia
+Iraq,54391,20149000,0.002699439,Asia
+Ireland,220025,3592000,0.061254176,Europe
+Isle of Man,35044,72000,0.486722222,Europe
+Israel,1391489,5271000,0.263989566,Asia
+Italy,1600756,57174000,0.027997971,Europe
+Jamaica,18505,2534000,0.007302684,Latin America and the Caribbean
+Japan,1330206,126365000,0.010526696,Asia
+Jordan,389718,4589000,0.084924384,Asia
+Kazakhstan,2750186,15839000,0.173633815,Asia
+Kenya,255868,27768000,0.009214492,Africa
+Kiribati,419,78000,0.005371795,Oceania
+Korea (Democratic People's Rep. of),31613,NA,NA,Asia
+Kuwait,873725,1606000,0.544037983,Asia
+Kyrgyzstan,478224,4566000,0.104735874,Asia
+Lao People's Democratic Republic,20911,4846000,0.004315105,Asia
+Latvia,534433,2508000,0.213091308,Europe
+Lebanon,176303,3528000,0.049972506,Asia
+Lesotho,4024,1899000,0.00211901,Africa
+Liberia,178536,2045000,0.087303667,Africa
+Libya,267202,4949000,0.053991109,Africa
+Liechtenstein,12266,31000,0.395677419,Europe
+Lithuania,256015,3627000,0.070585884,Europe
+Luxembourg,115900,408000,0.284068627,Europe
+Madagascar,8257,13475000,0.000612764,Africa
+Malawi,188946,9844000,0.019194027,Africa
+Malaysia,843665,20488000,0.041178495,Asia
+Maldives,17819,254000,0.070153543,Asia
+Mali,75570,9586000,0.007883372,Africa
+Malta,17325,377000,0.045954907,Europe
+Marshall Islands,1070,50000,0.0214,Oceania
+Martinique,37599,369000,0.101894309,Latin America and the Caribbean
+Mauritania,86289,2314000,0.037289974,Africa
+Mauritius,6655,1129000,0.005894597,Africa
+Mayotte,2791,123000,0.022691057,Africa
+Mexico,442196,91663000,0.004824149,Latin America and the Caribbean
+Micronesia (Fed. States of),93123,108000,0.86225,Oceania
+Monaco,11581,31000,0.373580645,Europe
+Mongolia,6584,2298000,0.0028651,Asia
+Montenegro,0,620000,0,Europe
+Montserrat,680,10000,0.068,Latin America and the Caribbean
+Morocco,39463,26994000,0.001461917,Africa
+Mozambique,122045,15483000,0.007882516,Africa
+Myanmar,99848,43902000,0.002274338,Asia
+Namibia,86235,1628000,0.052969902,Africa
+Nauru,977,11000,0.088818182,Oceania
+Nepal,544247,21576000,0.025224648,Asia
+Netherlands,1038454,15468000,0.067135635,Europe
+New Caledonia,27731,193000,0.143683938,Oceania
+New Zealand,531153,3675000,0.144531429,Oceania
+Nicaragua,24688,4652000,0.005306965,Latin America and the Caribbean
+Niger,89551,9490000,0.009436354,Africa
+Nigeria,334223,107948000,0.003096148,Africa
+Niue,357,2000,0.1785,Oceania
+North Macedonia,93322,1983000,0.047061019,Europe
+Northern Mariana Islands,25728,46000,0.559304348,Oceania
+Norway,198468,4367000,0.045447218,Europe
+Oman,521084,2204000,0.236426497,Asia
+Pakistan,2460049,123777000,0.019874848,Asia
+Palau,3869,17000,0.227588235,Oceania
+Panama,68678,2740000,0.025064964,Latin America and the Caribbean
+Papua New Guinea,24030,5187000,0.004632736,Oceania
+Paraguay,180220,4777000,0.037726607,Latin America and the Caribbean
+Peru,50007,24299000,0.002057986,Latin America and the Caribbean
+Philippines,169433,69784000,0.002427963,Asia
+Poland,911975,38459000,0.023712915,Europe
+Portugal,301199,10091000,0.029848281,Europe
+Puerto Rico,323215,3568000,0.090587164,Latin America and the Caribbean
+Qatar,330026,513000,0.643325536,Asia
+Republic of Korea,116334,45293000,0.002568476,Asia
+Republic of Moldova,350587,4341000,0.080761806,Europe
+Réunion,52919,674000,0.078514837,Africa
+Romania,122719,22965000,0.00534374,Europe
+Russian Federation,10151733,148227000,0.068487745,Europe
+Rwanda,193485,5836000,0.033153701,Africa
+Saint Helena,104,6000,0.017333333,Africa
+Saint Kitts and Nevis,733,42000,0.017452381,Latin America and the Caribbean
+Saint Lucia,3542,147000,0.024095238,Latin America and the Caribbean
+Saint Pierre and Miquelon,1147,6000,0.191166667,Northern America
+Saint Vincent and the Grenadines,2688,108000,0.024888889,Latin America and the Caribbean
+Samoa,2636,170000,0.015505882,Oceania
+San Marino,3554,26000,0.136692308,Europe
+Sao Tome and Principe,661,132000,0.005007576,Africa
+Saudi Arabia,4816444,18639000,0.258406781,Asia
+Senegal,217697,8690000,0.025051438,Africa
+Serbia,291836,9884000,0.029526103,Europe
+Seychelles,4190,77000,0.054415584,Africa
+Sierra Leone,84295,4304000,0.01958527,Africa
+Singapore,783546,3526000,0.222219512,Asia
+Sint Maarten (Dutch part),0,31000,0,Latin America and the Caribbean
+Slovakia,68377,5375000,0.012721302,Europe
+Slovenia,93159,1991000,0.046790055,Europe
+Solomon Islands,2771,359000,0.007718663,Oceania
+Somalia,0,7492000,0,Africa
+South Africa,923806,41436000,0.022294768,Africa
+South Sudan,0,5118000,0,Africa
+Spain,948316,39787000,0.02383482,Europe
+Sri Lanka,39026,18243000,0.002139231,Asia
+State of Palestine,248543,2619000,0.094899962,Asia
+Sudan,125678,24095000,0.005215937,Africa
+Suriname,13070,442000,0.029570136,Latin America and the Caribbean
+Sweden,701439,8836000,0.079384224,Europe
+Switzerland,1195585,6996000,0.170895512,Europe
+Syrian Arab Republic,3176,14345000,0.000221401,Asia
+Tajikistan,331183,5765000,0.057447181,Asia
+Thailand,809654,59467000,0.013615182,Asia
+Timor-Leste,8570,844000,0.010154028,Asia
+Togo,69501,4226000,0.016446048,Africa
+Tokelau,223,2000,0.1115,Oceania
+Tonga,928,96000,0.009666667,Oceania
+Trinidad and Tobago,14078,1254000,0.011226475,Latin America and the Caribbean
+Tunisia,30364,9125000,0.003327562,Africa
+Turkey,946349,58486000,0.016180778,Asia
+Turkmenistan,178648,4208000,0.042454373,Asia
+Turks and Caicos Islands,5252,16000,0.32825,Latin America and the Caribbean
+Tuvalu,113,9000,0.012555556,Oceania
+Uganda,586820,20413000,0.028747367,Africa
+Ukraine,5474434,50904000,0.107544279,Europe
+United Arab Emirates,1739446,2415000,0.720267495,Asia
+United Kingdom,3869745,57932000,0.066798056,Europe
+United Republic of Tanzania,1094342,29649000,0.036909913,Africa
+United States of America,24171075,265164000,0.091155191,Northern America
+United States Virgin Islands,20101,107000,0.187859813,Latin America and the Caribbean
+Uruguay,85922,3224000,0.026650744,Latin America and the Caribbean
+Uzbekistan,1433355,22791000,0.062891273,Asia
+Vanuatu,1225,168000,0.007291667,Oceania
+Venezuela (Bolivarian Republic of),1005609,21931000,0.045853313,Latin America and the Caribbean
+Viet Nam,15175,74910000,0.000202576,Asia
+Wallis and Futuna Islands,461,14000,0.032928571,Oceania
+Western Sahara,2284,256000,0.008921875,Africa
+Yemen,36121,14913000,0.002422115,Asia
+Zambia,91313,9097000,0.010037705,Africa
+Zimbabwe,393451,11411000,0.034479975,Africa
