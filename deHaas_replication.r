@@ -1,5 +1,6 @@
-##Creates visual based on de Haas (2010) 
+##Creates visual based on de Haas (2010)
 ##found at http://heindehaas.blogspot.com/2020/02/why-development-will-not-stop-migration.html
+##**Currently in chapter**##
 
 library(ggplot2)
 library(tidyr)
@@ -7,8 +8,6 @@ library(dplyr)
 library(ggpubr)
 library(data.table)
 library(gganimate)
-
-##Based on de Haas (2010) found at http://heindehaas.blogspot.com/2020/02/why-development-will-not-stop-migration.html
 
 #Load in DESA data stripped of UN header
 pop_global <- read.csv(here('desa_pop_totals.csv'), stringsAsFactors = FALSE)
