@@ -5,10 +5,10 @@ This workflow uses three data sources to measure migrant stocks as analyzed thro
 The following files can be found below. Some prep work was done in excel prior to importing into the R interface.
 
 #Data#
-DESA Population Stock Origin and Destination 2019
-DESA Population Totals 2019
-HDI Index 2018
-UNHCR Total Persons of Concern 2018
+DESA Population Stock Origin and Destination 2019;
+DESA Population Totals 2019;
+HDI Index 2018;
+UNHCR Total Persons of Concern 2018;
 
 #Data cleaning/files#
 Origin_dest_long.r for DESA migrant stock
