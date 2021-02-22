@@ -1,11 +1,11 @@
 ##
-## data1 un bilateral stocks
-## data2 un country and region summary
-## data3 hdi and unhcr
-## data4 migrant totals by hdi group
-## data5 ecowas
-## data6 schengen
-
+## DESA update 2020 code
+## data1_2020 un bilateral stocks
+## data2_2020 un country and region summary
+## data3_2020 hdi and unhcr
+## data4_2020 migrant totals by hdi group
+## data5_2020 ecowas
+## data6_2020 schengen
 
 library(tidyverse)
 
@@ -15,19 +15,19 @@ d2 <- read_csv(file = "./data/hdi_2020.csv")
 d3 <- read_csv(file = "./data/unhcr_2020.csv")
 
 
-
+# load hdi totals
 d4a <- d2 %>%
   select(alpha3, year, contains("imp")) %>%
   group_by(alpha3) %>%
   rename(orig = alpha3, 
          orig_hdi = hdi_level_imp,
-         orig_hdi19 = hdi_level19_imp)
+         orig_hdi20 = hdi_level20_imp)
 
 d4b <- d4a %>%
   set_names(nm = str_replace_all(
     string = names(.), pattern = "orig", replacement = "dest"))
 
-# bilateral stocks with hdi classifications
+# join bilateral stocks with hdi classifications and unhcr data
 d4 <- d0 %>%
   filter(por_code < 900, pob_code < 900,
          !is.na(pob)) %>%
@@ -104,9 +104,9 @@ d6 <- d6a %>%
   left_join(d6b) %>%
   left_join(d6c) %>%
   mutate(imm_share = imm/pop,
-         emi_share = emi/pop,
+         emi_share = emi/(emi + pop),
          fb_share = fb/pop, 
-         disp_share = disp/pop)
+         disp_share = disp/(disp+pop))
 
 # long form for ggplot
 d7 <- d6 %>%
@@ -129,13 +129,15 @@ d8 <- d5 %>%
 
 d9 <- d5 %>%
   drop_na() %>%
-  group_by(orig_hdi19, dest_hdi19, year) %>%
-  summarise(stock19 = sum(stepladder)/1e6) %>%
-  rename(orig = orig_hdi19, 
-         dest = dest_hdi19)
+  group_by(orig_hdi20, dest_hdi20, year) %>%
+  summarise(stock20 = sum(stepladder)/1e6) %>%
+  rename(orig = orig_hdi20, 
+         dest = dest_hdi20)
 
+#exclude 1990
 d10 <- left_join(d8, d9) %>%
   filter(year != 1990)
+
 # save
 write_csv(x = d10, path = "./data/hdi_bilat_2020.csv")
 

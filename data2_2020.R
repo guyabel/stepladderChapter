@@ -1,17 +1,19 @@
 ##
-## data1 un bilateral stocks
-## data2 un country and region summary
-## data3 hdi and unhcr
-## data4 migrant totals by hdi group
-## data5 ecowas
-## data6 schengen
+## DESA update 2020 code
+## data1_2020 un bilateral stocks
+## data2_2020 un country and region summary
+## data3_2020 hdi and unhcr
+## data4_2020 migrant totals by hdi group
+## data5_2020 ecowas
+## data6_2020 schengen
 
 
 library(tidyverse)
 library(readxl)
 library(countrycode)
 
-
+# read in "Total, Destination" xlsx file found on https://www.un.org/development/desa/pd/content/international-migrant-stock
+# Cut out unnecessary columns, rename, filter, convert long
 read_un_totals <- function(s = NULL, col = NULL, col_name = NULL){
   read_excel(path = "./data_raw/undesa_pd_2020_ims_stock_by_sex_and_destination.xlsx", 
              sheet = s, skip = 10, na = "..") %>%
@@ -30,6 +32,10 @@ d0 <- read_un_totals(s = 2, col = c(2, 4, 6:12), col_name = "fb")
 d1 <- read_un_totals(s = 3, col = c(2, 4, 6:12), col_name = "pop")
 d2 <- read_un_totals(s = 4, col = c(2, 4, 6:12), col_name = "fb_share")
 d3 <- read_un_totals(s = 7, col = c(2, 4, 6:12), col_name = "refugee")
+
+#write population figures to csv
+write_csv(x = d1, path = "./data/pop_totals_2020.csv")
+
 
 # need bilat for dispora totals in table
 d <- read_csv(file = "./data/stock_bilat_2020.csv", guess_max = 1e5)
@@ -57,7 +63,7 @@ d6 <- d0 %>%
   left_join(d4) %>%
   left_join(d5) %>%
   relocate(alpha3) %>%
-  filter(!is.na(country_code)) %>%
+  filter(!is.na(country_code), country_code < 900) %>%
   mutate(pop = pop * 1e3, 
          disp_share = disp/pop)
 write_csv(x = d6, path = "./data/stock_totals_2020.csv")

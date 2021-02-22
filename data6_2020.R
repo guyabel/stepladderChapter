@@ -31,6 +31,7 @@ d3b <- d0 %>%
   replace_na(list(schengen_orig = 0))
 
 # Filter only bilats according to whether they include schengen country
+# Russian Federation's imm and emi stocks are high, so created so far unused column for Russian Federation
 d3 <- d3a %>%
   left_join(d3b) %>%
   mutate(schengen = case_when(schengen_orig == 1 & schengen_dest == 1 ~ "3.schengen corridor", 
@@ -90,10 +91,10 @@ d6 <- d3 %>%
          dest = dest_hdi)
 
 d7 <- d3 %>%
-  group_by(orig_hdi19, dest_hdi19, year, schengen, russia) %>%
-  summarise(stock19 = sum(stepladder)/1e6) %>%
-  rename(orig = orig_hdi19, 
-         dest = dest_hdi19)
+  group_by(orig_hdi20, dest_hdi20, year, schengen, russia) %>%
+  summarise(stock20 = sum(stepladder)/1e6) %>%
+  rename(orig = orig_hdi20, 
+         dest = dest_hdi20)
 
 d8 <- left_join(d6, d7)
 
@@ -102,16 +103,3 @@ d8 <- d8 %>%
 
 # save
 write_csv(x = d8, path = "./data/schengen_bilats_2020.csv")
-
-
-# pop calculation: NOT DONE
-pop <- d2 %>% 
-  filter(!is.na(alpha3)) %>%
-  select(alpha3, year, fb, pop, disp) %>%
-  left_join(d4, by = c("alpha3" = "orig", "year" = "year")) %>%
-  rename(hdi = orig_hdi) %>%
-  filter(year == 2019 & orig_hdi19 == "Very High") %>%
-  group_by(alpha3, schengen) %>%
-  summarise(fb = sum(fb), 
-            pop = sum(pop),
-            disp = sum(disp))

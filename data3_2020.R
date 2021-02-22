@@ -1,19 +1,20 @@
 ##
-## data1 un bilateral stocks
-## data2 un country and region summary
-## data3 hdi and unhcr
-## data4 migrant totals by hdi group
-## data5 ecowas
-## data6 schengen
-
+## DESA update 2020 code
+## data1_2020 un bilateral stocks
+## data2_2020 un country and region summary
+## data3_2020 hdi and unhcr
+## data4_2020 migrant totals by hdi group
+## data5_2020 ecowas
+## data6_2020 schengen
 
 library(tidyverse)
 library(countrycode)
 
+# Load HDI data, in GitHub file but also can be found at http://hdr.undp.org/en/data
 d <- read_csv(file = "./data_raw/Human development index (HDI)_2019.csv", 
               na = c(".."), skip = 5)
 
-# countries
+# countries...have to rename year to 2020 to make consistent with DESA update
 d0 <- d %>%
   rename("2020"="2019")%>%
   slice(1:189) %>%
@@ -63,7 +64,7 @@ d3 <- d0 %>%
 # - impute hdi level to avoid dropping big sending countries
 #   from analysis using fill() function in tidyr
 # - add hdi level 1995 following what is in some of the scripts
-# - add 2019 and impute for too.
+# - add 2020 and impute for too.
 d4 <- d3 %>%
   group_by(alpha3) %>%
   mutate(hdi_level = na_if(x = hdi_level, y = ""),
@@ -73,15 +74,15 @@ d4 <- d3 %>%
   fill(hdi_level_imp, .direction = "downup") %>%
   mutate(#hdi_level95 = hdi_level[year == 1995],
     #hdi_level95_imp = hdi_level_imp[year == 1995],
-    hdi_level19 = hdi_level[year == 2020],
-    hdi_level19_imp = hdi_level_imp[year == 2020])
+    hdi_level20 = hdi_level[year == 2020],
+    hdi_level20_imp = hdi_level_imp[year == 2020])
 d4
 # imputation for past values
 d4 %>%
   select(-rank, -name) %>%
   filter(alpha3 == "AGO")
 
-# imputation for 2019
+# imputation for 2020
 d4 %>%
   select(-rank, -name) %>%
   tail()
@@ -89,11 +90,12 @@ d4 %>%
 # save
 write_csv(x = d4, path = "./data/hdi_2020.csv")
 
-#bring in unhcr data
+
+# Load unhcr data, can also be found at https://www.unhcr.org/refugee-statistics/download/?url=E1ZxP4
 d <- read_csv(file = "./data_raw/population.csv", 
               na = c(".."), skip = 14)[,1:7]
 
-#rename
+# rename
 d0 <- d %>%
   select(-2, -4) %>%
   rename(year = 1,

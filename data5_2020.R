@@ -97,10 +97,10 @@ d6 <- d3 %>%
 
 d7 <- d3 %>%
   #drop_na() %>%
-  group_by(orig_hdi19, dest_hdi19, year, ecowas) %>%
-  summarise(stock19 = sum(stepladder)/1e6) %>%
-  rename(orig = orig_hdi19, 
-         dest = dest_hdi19)
+  group_by(orig_hdi20, dest_hdi20, year, ecowas) %>%
+  summarise(stock20 = sum(stepladder)/1e6) %>%
+  rename(orig = orig_hdi20, 
+         dest = dest_hdi20)
 
 d8 <- left_join(d6, d7)
 

@@ -1,19 +1,22 @@
 ##
-## data1 un bilateral stocks
-## data2 un country and region summary
-## data3 hdi and unhcr
-## data4 migrant totals by hdi group
-## data5 ecowas
-## data6 schengen
+## DESA update 2020 code
+## data1_2020 un bilateral stocks
+## data2_2020 un country and region summary
+## data3_2020 hdi and unhcr
+## data4_2020 migrant totals by hdi group
+## data5_2020 ecowas
+## data6_2020 schengen
 
 
 library(tidyverse)
 library(readxl)
 library(countrycode)
 
+#read in "Destination and Origin" xlsx file found on https://www.un.org/development/desa/pd/content/international-migrant-stock
 d <- read_excel(path = "./data_raw/undesa_pd_2020_ims_stock_by_sex_destination_and_origin.xlsx", 
                 sheet = 2, skip = 9, na = c("..", "-"))
 
+# Cut out unnecessary columns, rename, filter, convert long
 d0 <- d %>%
   select(-1, -3, -5, -15:-28) %>%
   rename_all(funs(gsub("[[:punct::]+[0-9]+", "", .))) %>%

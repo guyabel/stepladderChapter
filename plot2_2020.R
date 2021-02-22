@@ -1,12 +1,14 @@
 ##
-## plot1 bar charts and divergent bar charts
-## plot2 area charts
-##
+## plot1_2020 bar charts and divergent bar charts
+## plot2_2020 area charts
+## plot3_2020 area charts for ECOWAS/Schengen
+## tab1_2020 table of regional (not HDI) stepladder migrants
+## tab2_2020 top20s stepladder (1995, 2020)
 
 library(tidyverse)
 cc4 <- c("Very High" = "#253494", "High" = "#2c7fb8", "Medium" = "#41b6c4", "Low" = "#a1dab4")
 d <- read_csv("./data/hdi_bilat_2020.csv")
-d$hdi <- factor(x = d$hdi, levels = names(cc4))
+#d$hdi <- factor(x = d$hdi, levels = names(cc4))
 
 bilat_tot <- function(x = NULL, hdi = NULL){
   x %>%
@@ -38,7 +40,7 @@ d0 %>%
              labeller = label_wrap_gen(width = 30)) + 
   geom_area() +
   # add line based on HDI in 2019
-  geom_area(mapping = aes(y = stock19), stat = 'summary', fun = sum,
+  geom_area(mapping = aes(y = stock20), stat = 'summary', fun = sum,
             colour = "black", fill = "transparent", linetype = 2) +
   scale_fill_manual(values = cc4, 
                     guide = guide_legend(title.position = "top")) +
@@ -62,18 +64,18 @@ area_plot <- function(x, hdi){
     unique()
   
   ggplot(data = x, 
-         mapping = aes(x = year, y = stock, fill = region)) +
+         mapping = aes(x = year, y = stock, fill = factor(region, levels = c("Very High", "High", "Medium", "Low")))) +
     facet_wrap(facets = "type", nrow = 4, ncol = 3,
                labeller = label_wrap_gen(width = 30)) + 
     geom_area() +
-    geom_area(mapping = aes(y = stock19), stat = 'summary', fun = sum,
+    geom_area(mapping = aes(y = stock20), stat = 'summary', fun = sum,
               colour = "black", fill = "transparent", linetype = 2, guide=guide_legend("top")) +
     scale_fill_manual(values = cc4, 
                       guide = guide_legend(title.position = "top")) +
     theme_bw() +
     theme(legend.position = "bottom", panel.spacing.x = unit(1, "lines")) +
     labs(x = "", y = "Migrant stock (in millions)", 
-         fill = "Human Devemopment Index", title = hdi)
+         fill = "Human Development Index", title = hdi)
 }
 
 g1 <- d %>%

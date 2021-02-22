@@ -1,7 +1,9 @@
 ##
-## plot1 bar charts and divergent bar charts
-## plot2 area charts
-##
+## plot1_2020 bar charts and divergent bar charts
+## plot2_2020 area charts
+## plot3_2020 area charts for ECOWAS/Schengen
+## tab1_2020 table of regional (not HDI) stepladder migrants
+## tab2_2020 top20s stepladder (1995, 2020)
 
 library(tidyverse)
 library(lemon)
@@ -19,8 +21,8 @@ d$hdi <- factor(x = d$hdi, levels = names(cc4))
 ##  
 # change year and total (to imm or fb or emi or disp) in filter 
 d %>%
-  filter(year == 1995,
-         total == "imm") %>%
+  filter(year == 2020,
+         total == "emi_share") %>%
   ggplot(mapping = aes(x = hdi, y = stepladder, fill = hdi)) +
   geom_col() +
   scale_fill_manual(values = cc4) +
@@ -40,7 +42,7 @@ d %>%
 # using bilateral data but without filtering for if in HDI
 d %>%
   filter(year == 2020,
-         total %in% c("imm_share", "disp_share")) %>%
+         total %in% c("imm_share", "emi_share")) %>%
   mutate(y_lab = ifelse(total == "imm_share", yes = names(cc2[1]), no = names(cc2[2]))) %>%
   ggplot(mapping = aes(x = fct_rev(hdi), y = stepladder, fill = y_lab)) +
   geom_col(position = "dodge") +
@@ -66,7 +68,7 @@ file.show("./plot/fig6_dehaas_2020.tiff")
 #          y_lab = ifelse(total == "imm", yes = names(cc2[1]), no = names(cc2[2]))) %>%
 d %>%
   filter(year == 2020,
-         total %in% c("imm", "disp")) %>%
+         total %in% c("imm", "emi")) %>%
   mutate(stepladder = ifelse(total == "imm", yes = stepladder, no = -stepladder),
          y_lab = ifelse(total == "imm", yes = names(cc2[1]), no = names(cc2[2]))) %>%
   ggplot(mapping = aes(x = stepladder, y = fct_rev(hdi), fill = y_lab)) +
@@ -89,7 +91,7 @@ g1 <- last_plot()
 #          y_lab = ifelse(total == "imm_share", yes = names(cc2[1]), no = names(cc2[2]))) %>%
 d %>%
   filter(year == 2020,
-         total %in% c("imm_share", "disp_share")) %>%
+         total %in% c("imm_share", "emi_share")) %>%
   mutate(stepladder = ifelse(total == "imm_share", yes = stepladder, no = -stepladder),
          y_lab = ifelse(total == "imm_share", yes = names(cc2[1]), no = names(cc2[2]))) %>%
   ggplot(mapping = aes(x = stepladder, y = fct_rev(hdi), fill = y_lab)) +
@@ -107,32 +109,9 @@ g1 + (g2 + labs(y = "")) +
   plot_layout(guides = "collect") & 
   theme(legend.position = 'bottom')
 
-ggsave(filename = "./plot/fig5_div_bars.tiff", width = 8, height = 5)
+ggsave(filename = "./plot/fig5_div_bars_2020.tiff", width = 8, height = 5)
 file.show("./plot/fig5_div_bars_2020.tiff")
 
 # run above with imm and emi
 # ggsave(filename = "./plot/fig5_div_bars_hdi_only.tiff", width = 8, height = 5)
-
-
-###INDEX CHECK
-d <- read_csv("./data/hdi_country_bilat_2020.csv")
-d1 <- read_csv(file = "./data/stock_totals_2020.csv")
-
-
-d2 <- d %>%
-  filter(year != 1995) %>%
-  select(year, pob_name, stepladder) %>%
-  group_by(year, pob_name) %>%
-  summarise(stepladder=sum(stepladder)) %>%
-  rename(name = pob_name) %>%
-  left_join(d1) %>%
-  mutate(stepladder_share= stepladder/(stepladder+pop))
-
-d2 %>%
-  ggplot(aes(x=hdi, y=stepladder)) +
-  geom_point() +
-  stat_smooth(method = "lm", formula = y ~ x, size = 1, color = "red", se= FALSE, linetype = "dashed") +
-  stat_smooth(method = "loess", formula = y ~ x, size = 1, linetype = "solid") +
-  labs(title="Emigrant stock versus Human Development Index, 1995-2020") +
-  theme_bw()
 
