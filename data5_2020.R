@@ -9,7 +9,7 @@
 library(tidyverse)
 
 d0 <- read_csv(file = "./data/hdi_country_bilat_2020.csv")
-d1 <- read_csv(file = "./data/ecowas.csv")
+d1 <- read_csv(file = "./data_raw/ecowas.csv")
 d2 <- read_csv(file = "./data/stock_totals_2020.csv")
 
 d1 <- d1 %>%
