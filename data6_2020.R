@@ -30,7 +30,7 @@ d3b <- d0 %>%
   mutate(schengen_orig = ifelse(orig %in% d1$alpha3, 1, 0)) %>%
   replace_na(list(schengen_orig = 0))
 
-# Filter only bilats according to whether they include schengen country
+# Add columns defining whether bilats include ecowas country
 # Russian Federation's imm and emi stocks are high, so created so far unused column for Russian Federation
 d3 <- d3a %>%
   left_join(d3b) %>%

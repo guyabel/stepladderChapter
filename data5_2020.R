@@ -4,7 +4,7 @@
 ## data3 hdi and unhcr
 ## data4 migrant totals by hdi group
 ## data5 ecowas
-## data6 ecowas
+## data6 schengen
 
 library(tidyverse)
 
@@ -32,13 +32,19 @@ d3b <- d0 %>%
   mutate(ecowas_orig = ifelse(orig %in% d1$alpha3, 1, 0)) %>%
   replace_na(list(ecowas_orig = 0))
 
-# Filter only bilats according to whether they include ecowas country
+# Add columns defining whether bilats include ecowas country
 d3 <- d3a %>%
   full_join(d3b) %>%
   mutate(ecowas = case_when(ecowas_orig == 1 & ecowas_dest == 1 ~ "3.ecowas corridor", 
                             ecowas_orig == 1 | ecowas_dest == 1 ~ "2.ecowas origin or destination",
                             ecowas_orig != 1 | ecowas_dest != 1 ~ "1.not ecowas")) %>%
+  mutate(india = ifelse(dest == "IND" | orig == "IND", "India", "Not India"))%>%
+  mutate(pakistan = ifelse(dest == "PAK" | orig == "PAK", "Pakistan", "Not Pakistan"))%>%
+  mutate(india_pak = ifelse(india == "India" | pakistan == "Pakistan", "India or Pakistan", "Not India or Pakistan")) %>%
   filter(year != 1990)
+
+d3_pak <- d3 %>%
+  filter(pakistan == "Pakistan")
 
 d3_us <- d3 %>% filter(por_name == "United States of America*")
 
@@ -90,14 +96,14 @@ write_csv(x = d5, path = "./data/hdi_ecowas_totals_2020.csv")
 ##
 d6 <- d3 %>%
   #drop_na() %>%
-  group_by(orig_hdi, dest_hdi, year, ecowas) %>%
+  group_by(orig_hdi, dest_hdi, year, ecowas, india, pakistan, india_pak) %>%
   summarise(stock = sum(stepladder)/1e6) %>%
   rename(orig = orig_hdi, 
          dest = dest_hdi)
 
 d7 <- d3 %>%
   #drop_na() %>%
-  group_by(orig_hdi20, dest_hdi20, year, ecowas) %>%
+  group_by(orig_hdi20, dest_hdi20, year, ecowas, india, pakistan, india_pak) %>%
   summarise(stock20 = sum(stepladder)/1e6) %>%
   rename(orig = orig_hdi20, 
          dest = dest_hdi20)
@@ -109,3 +115,4 @@ d9<- d8 %>%
 
 # save
 write_csv(x = d8, path = "./data/ecowas_bilats_2020.csv")
+
