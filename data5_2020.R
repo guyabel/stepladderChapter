@@ -40,7 +40,7 @@ d3 <- d3a %>%
                             ecowas_orig != 1 | ecowas_dest != 1 ~ "1.not ecowas")) %>%
   mutate(india = ifelse(dest == "IND" | orig == "IND", "India", "Not India"))%>%
   mutate(pakistan = ifelse(dest == "PAK" | orig == "PAK", "Pakistan", "Not Pakistan"))%>%
-  mutate(india_pak = ifelse(india == "India" | pakistan == "Pakistan", "India or Pakistan", "Not India or Pakistan")) %>%
+  mutate(india_pakistan = ifelse(india == "India" | pakistan == "Pakistan", "India or Pakistan", "Not India or Pakistan")) %>%
   filter(year != 1990)
 
 d3_pak <- d3 %>%
@@ -96,14 +96,14 @@ write_csv(x = d5, path = "./data/hdi_ecowas_totals_2020.csv")
 ##
 d6 <- d3 %>%
   #drop_na() %>%
-  group_by(orig_hdi, dest_hdi, year, ecowas, india, pakistan, india_pak) %>%
+  group_by(orig_hdi, dest_hdi, year, ecowas, india, pakistan, india_pakistan) %>%
   summarise(stock = sum(stepladder)/1e6) %>%
   rename(orig = orig_hdi, 
          dest = dest_hdi)
 
 d7 <- d3 %>%
   #drop_na() %>%
-  group_by(orig_hdi20, dest_hdi20, year, ecowas, india, pakistan, india_pak) %>%
+  group_by(orig_hdi20, dest_hdi20, year, ecowas, india, pakistan, india_pakistan) %>%
   summarise(stock20 = sum(stepladder)/1e6) %>%
   rename(orig = orig_hdi20, 
          dest = dest_hdi20)

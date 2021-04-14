@@ -58,7 +58,8 @@ file.show("./plot/ecowas_HDI_2020.tiff")
 Low_hdi <- d1 %>% 
   select(-stock20) %>%
   drop_na() %>% 
-  filter(orig == "Low" & dest == "Low")
+  filter(orig == "Low" & dest == "Low") #%>%
+  #filter(india_pakistan == "Not India or Pakistan" ) #To include india and pakistan, comment out/remove this line
 
 g6 <- Low_hdi %>%
   ggplot(aes(x = year, y = stock, fill = ecowas)) +
@@ -73,7 +74,7 @@ ggsave(filename = "./plot/low_hdi_2020.tiff", width = 9, height = 6)
 file.show("./plot/low_hdi_2020.tiff")
 
 
-##India and Pakistan: fill = india_pak
+##India and Pakistan: fill = india_pakistan
 #india: fill = india
 #pakistan: fill = pakistan
 
@@ -83,7 +84,7 @@ Low_hdi <- d1 %>%
   filter(orig == "Low" & dest == "Low")
 
 g6 <- Low_hdi %>%
-  ggplot(aes(x = year, y = stock, fill = india_pak)) +
+  ggplot(aes(x = year, y = stock, fill = india_pakistan)) +
   geom_area(stat="summary", fun=sum, alpha=0.4) +
   scale_fill_manual(values=c("#253494", "#890017", "#214900"), labels = c("India and Pakistan", "Other Low HDI countries"))+
   theme_bw() +
@@ -92,5 +93,5 @@ g6 <- Low_hdi %>%
        fill = "", title="Migration between Low HDI countries: India and Pakistan")
 g6
 #label based on fill value
-ggsave(filename = "./plot/india_pak.tiff", width = 9, height = 6)
+ggsave(filename = "./plot/india_pakistan.tiff", width = 9, height = 6)
 file.show("./plot/india_pak.tiff")
