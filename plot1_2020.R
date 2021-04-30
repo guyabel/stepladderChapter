@@ -12,6 +12,7 @@ library(patchwork)
 
 cc4 <- c("Very High" = "#253494", "High" = "#2c7fb8", "Medium" = "#41b6c4", "Low" = "#a1dab4")
 cc2 <- c("Immigrants" = "#253494", "Emigrants" = "#2c7fb8")
+cc2 <- c("Immigrants" = "#c0504d", "Emigrants" = "#2c7fb8")
 
 d <- read_csv("./data/hdi_totals_2020.csv")
 d$hdi <- factor(x = d$hdi, levels = names(cc4))
@@ -47,7 +48,8 @@ d %>%
   ggplot(mapping = aes(x = fct_rev(hdi), y = stepladder, fill = y_lab)) +
   geom_col(position = "dodge") +
   scale_fill_manual(values = cc2, name = "") +
-  scale_y_continuous(labels = percent_format(accuracy = 1)) +
+  scale_y_continuous(labels = percent_format(accuracy = 1), 
+                     breaks = seq(0, 0.12, 0.02)) +
   theme_bw() +
   theme(legend.position = "bottom") +
   labs(x = "Human Devemopment Index", y = "Percentage of population")
