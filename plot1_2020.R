@@ -52,7 +52,7 @@ d %>%
                      breaks = seq(0, 0.12, 0.02)) +
   theme_bw() +
   theme(legend.position = "bottom") +
-  labs(x = "Human Devemopment Index", y = "Percentage of population")
+  labs(x = "Human Development Index", y = "Percentage of Population")
 ggsave(filename = "./plot/fig6_dehaas_2020.tiff", width = 6, height = 4)
 file.show("./plot/fig6_dehaas_2020.tiff")
 
